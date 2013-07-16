@@ -23,5 +23,5 @@
 @property (nonatomic, readwrite) CGSize textShadowOffset; // default is CGSizeMake(0, -1)
 @property (nonatomic, readwrite) BOOL shouldCastShadow; // default is YES (NO when backgroundImage is set)
 @property (nonatomic, assign) CGFloat gradientIntensity; // default is 0.15
-
+@property BOOL noStroke;
 @end

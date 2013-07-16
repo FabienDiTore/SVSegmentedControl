@@ -228,22 +228,25 @@
         UIRectFillUsingBlendMode(thumbRect, kCGBlendModeOverlay);
         
         
-        // STROKE GRADIENT
-        CGContextRestoreGState(context);
-        CGContextAddPath(context, strokePath);
-        CGContextAddPath(context, [UIBezierPath bezierPathWithRoundedRect:CGRectInset(thumbRect, 1, 1) cornerRadius:cornerRadius-2.5].CGPath);
-        CGContextEOClip(context);
-        
-        CGFloat strokeComponents[4] = {1, 0.1,    1, 0.05};
-        
-        if(self.selected) {
-            strokeComponents[0]-=0.1;
-            strokeComponents[2]-=0.1;
+        if(!self.noStroke){
+            // STROKE GRADIENT
+            CGContextRestoreGState(context);
+            CGContextAddPath(context, strokePath);
+            CGContextAddPath(context, [UIBezierPath bezierPathWithRoundedRect:CGRectInset(thumbRect, 1, 1) cornerRadius:cornerRadius-2.5].CGPath);
+            CGContextEOClip(context);
+            
+            CGFloat strokeComponents[4] = {1, 0.1,    1, 0.05};
+            
+            if(self.selected) {
+                strokeComponents[0]-=0.1;
+                strokeComponents[2]-=0.1;
+            }
+            
+            
+            CGGradientRef strokeGradient = CGGradientCreateWithColorComponents(colorSpace, strokeComponents, NULL, 2);
+            CGContextDrawLinearGradient(context, strokeGradient, CGPointMake(0,0), CGPointMake(0,CGRectGetHeight(rect)), 0);
+            CGGradientRelease(strokeGradient);
         }
-        
-        CGGradientRef strokeGradient = CGGradientCreateWithColorComponents(colorSpace, strokeComponents, NULL, 2);
-        CGContextDrawLinearGradient(context, strokeGradient, CGPointMake(0,0), CGPointMake(0,CGRectGetHeight(rect)), 0);
-        CGGradientRelease(strokeGradient);
     }
 }
 
